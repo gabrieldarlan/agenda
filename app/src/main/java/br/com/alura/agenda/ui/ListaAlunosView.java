@@ -8,20 +8,21 @@ import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 
-import br.com.alura.agenda.dao.AlunoDao;
+import br.com.alura.agenda.database.AgendaDatabase;
+import br.com.alura.agenda.database.dao.AlunoDAO;
 import br.com.alura.agenda.model.Aluno;
 import br.com.alura.agenda.ui.adapter.ListaAlunosAdapter;
 
 public class ListaAlunosView {
 
     private final ListaAlunosAdapter adapter;
-    private final AlunoDao dao;
+    private AlunoDAO dao;
     private final Context context;
 
     public ListaAlunosView(Context context) {
         this.context = context;
         this.adapter = new ListaAlunosAdapter(this.context);
-        this.dao = new AlunoDao();
+        this.dao = AgendaDatabase.getInstance(this.context).getRoomAlunoDAO();
     }
 
     public void confirmaRemocao(@NonNull final MenuItem item) {
