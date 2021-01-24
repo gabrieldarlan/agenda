@@ -51,6 +51,7 @@ public class ListaAlunosAdapter extends BaseAdapter {
         return viewCriada;
     }
 
+    @SuppressLint("SetTextI18n")
     private void vincula(View view, Aluno aluno) {
         TextView nome = view.findViewById(R.id.item_aluno_nome);
         nome.setText(aluno.getNome());
@@ -65,11 +66,12 @@ public class ListaAlunosAdapter extends BaseAdapter {
     }
 
 
-    public void atualiza(List<Aluno> alunos){
+    public void atualiza(List<Aluno> alunos) {
         this.alunos.clear();
         this.alunos.addAll(alunos);
         notifyDataSetChanged();
     }
+
     public void remove(Aluno aluno) {
         this.alunos.remove(aluno);
         notifyDataSetChanged();
