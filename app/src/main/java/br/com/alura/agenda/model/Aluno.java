@@ -14,7 +14,8 @@ public class Aluno implements Serializable {
     @PrimaryKey(autoGenerate = true)
     private int id = 0;
     private String nome;
-    private String telefone;
+    private String telefoneFixo;
+    private String telefoneCelular;
     private String email;
     private Calendar momentoDeCadastro = Calendar.getInstance();
 
@@ -22,7 +23,7 @@ public class Aluno implements Serializable {
     @Ignore
     public Aluno(String nome, String telefone, String email) {
         this.nome = nome;
-        this.telefone = telefone;
+        this.telefoneFixo = telefone;
         this.email = email;
     }
 
@@ -34,8 +35,8 @@ public class Aluno implements Serializable {
         this.nome = nome;
     }
 
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
+    public void setTelefoneFixo(String telefoneFixo) {
+        this.telefoneFixo = telefoneFixo;
     }
 
     public void setEmail(String email) {
@@ -46,8 +47,8 @@ public class Aluno implements Serializable {
         return nome;
     }
 
-    public String getTelefone() {
-        return telefone;
+    public String getTelefoneFixo() {
+        return telefoneFixo;
     }
 
     public String getEmail() {
@@ -58,7 +59,7 @@ public class Aluno implements Serializable {
     @SuppressWarnings("NullableProblems")
     @Override
     public String toString() {
-        return this.nome + " - " + telefone;
+        return this.nome + " - " + telefoneFixo;
     }
 
     public int getId() {
@@ -81,4 +82,11 @@ public class Aluno implements Serializable {
         this.momentoDeCadastro = momentoDeCadastro;
     }
 
+    public String getTelefoneCelular() {
+        return telefoneCelular;
+    }
+
+    public void setTelefoneCelular(String telefoneCelular) {
+        this.telefoneCelular = telefoneCelular;
+    }
 }

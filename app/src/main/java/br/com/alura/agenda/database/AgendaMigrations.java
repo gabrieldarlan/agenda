@@ -39,5 +39,30 @@ public class AgendaMigrations {
         }
     };
 
-    static final Migration[] TODAS_MIGRATIONS = {MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4};
+    private static final Migration MIGRATION_4_5 = new Migration(4, 5) {
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+            // cria tabela nova
+
+            database.execSQL("CREATE TABLE IF NOT EXISTS `Aluno_novo` " +
+                    "(`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+                    "`nome` TEXT, " +
+                    "`telefoneFixo` TEXT, " +
+                    "`telefoneCelular` TEXT, " +
+                    "`email` TEXT, " +
+                    "`momentoDeCadastro` INTEGER)");
+
+            //insere dados da tabela antiga, para nova.
+            database.execSQL("INSERT INTO Aluno_novo (id, nome, telefoneFixo, email, momentoDeCadastro) " +
+                    "SELECT id, nome, telefone, email, momentoDeCadastro FROM Aluno");
+
+            // remove tabela antiga
+            database.execSQL("DROP TABLE Aluno");
+
+            // Renomeia tabela atual com o nome da tabela antiga
+            database.execSQL("ALTER TABLE Aluno_novo RENAME TO Aluno");
+
+        }
+    };
+    static final Migration[] TODAS_MIGRATIONS = {MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5};
 }
