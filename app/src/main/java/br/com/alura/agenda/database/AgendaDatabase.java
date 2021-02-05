@@ -24,7 +24,7 @@ public abstract class AgendaDatabase extends RoomDatabase {
 
     public abstract TelefoneDAO getTelefoneDAO();
 
-    public abstract AlunoDAO getRoomAlunoDAO();
+    public abstract AlunoDAO getAlunoDAO();
 
     public static AgendaDatabase getInstance(Context context) {
         return Room.databaseBuilder(context,

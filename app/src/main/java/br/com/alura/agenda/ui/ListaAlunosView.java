@@ -22,7 +22,7 @@ public class ListaAlunosView {
     public ListaAlunosView(Context context) {
         this.context = context;
         this.adapter = new ListaAlunosAdapter(this.context);
-        this.dao = AgendaDatabase.getInstance(this.context).getRoomAlunoDAO();
+        this.dao = AgendaDatabase.getInstance(this.context).getAlunoDAO();
     }
 
     public void confirmaRemocao(@NonNull final MenuItem item) {

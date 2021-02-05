@@ -21,6 +21,15 @@ public class Telefone {
             onUpdate = CASCADE)
     private int alunoId;
 
+    public Telefone() {
+    }
+
+    public Telefone(String numero, TipoTelefone tipo, int alunoId) {
+        this.numero = numero;
+        this.tipo = tipo;
+        this.alunoId = alunoId;
+    }
+
     public int getAlunoId() {
         return alunoId;
     }

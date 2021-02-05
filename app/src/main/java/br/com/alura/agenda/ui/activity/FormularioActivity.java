@@ -10,10 +10,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import br.com.alura.agenda.R;
+import br.com.alura.agenda.dao.TelefoneDAO;
 import br.com.alura.agenda.database.AgendaDatabase;
 import br.com.alura.agenda.database.dao.AlunoDAO;
 import br.com.alura.agenda.model.Aluno;
+import br.com.alura.agenda.model.Telefone;
 
+import static br.com.alura.agenda.model.TipoTelefone.CELULAR;
+import static br.com.alura.agenda.model.TipoTelefone.FIXO;
 import static br.com.alura.agenda.ui.activity.ConstantesActivities.CHAVE_ALUNO;
 
 public class FormularioActivity extends AppCompatActivity {
@@ -24,7 +28,8 @@ public class FormularioActivity extends AppCompatActivity {
     private EditText campoTelefoneFixo;
     private EditText campoTelefoneCelular;
     private EditText campoEmail;
-    private AlunoDAO dao;
+    private TelefoneDAO telefoneDAO;
+    private AlunoDAO alunoDAO;
     private Aluno aluno;
 
     @Override
@@ -32,7 +37,8 @@ public class FormularioActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_formulario);
         final AgendaDatabase database = AgendaDatabase.getInstance(this);
-        dao = database.getRoomAlunoDAO();
+        alunoDAO = database.getAlunoDAO();
+        telefoneDAO = database.getTelefoneDAO();
         inicializaCampos();
         carregaAluno();
     }
@@ -76,9 +82,18 @@ public class FormularioActivity extends AppCompatActivity {
     private void finalizaFormulario() {
         preencheAluno();
         if (aluno.temIdValido()) {
-            dao.edita(aluno);
+            alunoDAO.edita(aluno);
         } else {
-            dao.salva(aluno);
+            final int alunoId = alunoDAO.salva(aluno).intValue();
+            final String numeroFixo = campoTelefoneFixo.getText().toString();
+            final Telefone telefoneFixo = new Telefone(numeroFixo, FIXO, alunoId);
+
+            final String numeroCelular = campoTelefoneCelular.getText().toString();
+            final Telefone telefoneCelular = new Telefone(numeroCelular, CELULAR, alunoId);
+
+            telefoneDAO.salva(telefoneFixo,telefoneCelular);
+
+
         }
         finish();
     }
